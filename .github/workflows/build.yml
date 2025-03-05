@@ -21,13 +21,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller boto3 cryptography
+        pip install -r requirements.txt
 
     - name: Build executable
       run: pyinstaller --onefile s3_downloader.py
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: s3_downloader
         path: dist/s3_downloader.exe
@@ -38,7 +38,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
     - name: Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: s3_downloader
         path: ./dist
