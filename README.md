@@ -23,7 +23,7 @@ S3 Folder Downloader is a Python-based tool that allows you to download entire f
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/yourusername/s3_downloader.git
+    git clone git@github.com:chinmay-lightfury/s3_downloader.git
     cd s3_downloader
     ```
 
