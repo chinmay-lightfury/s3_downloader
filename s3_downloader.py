@@ -11,18 +11,18 @@ from tkinter import filedialog, messagebox, ttk
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-settings_file = 'aws_settings.enc'
-key_file = 'secret.key'
+SETTINGS_FILE = 'aws_settings.enc'
+KEY_FILE = 'secret.key'
 
 def generate_key():
     key = Fernet.generate_key()
-    with open(key_file, 'wb') as key_out:
+    with open(KEY_FILE, 'wb') as key_out:
         key_out.write(key)
 
 def load_key():
-    if not os.path.exists(key_file):
+    if not os.path.exists(KEY_FILE):
         generate_key()
-    with open(key_file, 'rb') as key_in:
+    with open(KEY_FILE, 'rb') as key_in:
         return key_in.read()
 
 def encrypt_data(data, key):
@@ -35,8 +35,8 @@ def decrypt_data(data, key):
 
 def load_settings():
     key = load_key()
-    if os.path.exists(settings_file):
-        with open(settings_file, 'rb') as f:
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, 'rb') as f:
             encrypted_data = f.read()
         decrypted_data = decrypt_data(encrypted_data, key)
         return json.loads(decrypted_data)
@@ -54,7 +54,7 @@ def save_settings(settings):
     key = load_key()
     data = json.dumps(settings)
     encrypted_data = encrypt_data(data, key)
-    with open(settings_file, 'wb') as f:
+    with open(SETTINGS_FILE, 'wb') as f:
         f.write(encrypted_data)
 
 def open_settings_window():
