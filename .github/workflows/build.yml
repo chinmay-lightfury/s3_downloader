@@ -74,7 +74,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: s3_downloader-${{ github.ref_name }}
-        path: ./
+        path: ./ 
 
     - name: Debug file location
       run: |
@@ -103,6 +103,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./s3_downloader-${{ github.ref }}.zip
-        asset_name: s3_downloader-${{ github.ref }}.zip
+        asset_path: ./s3_downloader-${{ github.ref_name }}.zip
+        asset_name: s3_downloader-${{ github.ref_name }}.zip
         asset_content_type: application/zip
