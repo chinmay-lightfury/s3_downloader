@@ -36,14 +36,14 @@ jobs:
 
     - name: Create ZIP archive
       run: |
-        $version = if ($env:GITHUB_REF.StartsWith("refs/tags/")) { $env:GITHUB_REF -replace 'refs/tags/v', '' } else { "dev" }
+        $version = if ($env:GITHUB_REF.StartsWith("refs/tags/")) { $env:GITHUB_REF -replace 'refs/tags/', '' } else { "dev" }
         Compress-Archive -Path dist/s3_downloader/* -DestinationPath "dist/s3_downloader-$version.zip"
       shell: pwsh
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: s3_downloader-${{ github.ref_name || 'dev' }}
+        name: s3_downloader-${{ github.ref_name }}
         path: dist/s3_downloader-*.zip
 
   release:
@@ -103,6 +103,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./s3_downloader-${{ github.ref_name }}.zip
-        asset_name: s3_downloader-${{ github.ref_name }}.zip
+        asset_path: ./s3_downloader-${{ github.ref }}.zip
+        asset_name: s3_downloader-${{ github.ref }}.zip
         asset_content_type: application/zip
